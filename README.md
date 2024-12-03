@@ -71,38 +71,48 @@ The project includes CI/CD integration with GitHub Actions, enabling automatic d
 - Go to your GitHub repository.
 - Navigate to Settings > Pages.
 - Set the Source to the gh-pages branch.
-- Create a GitHub Actions workflow file: .github/workflows/deploy.yml
 
 2. Create a GitHub Actions workflow file: `.github/workflows/deploy.yml`
 
 ```yaml
-name: Deploy to GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main # Trigger the workflow when changes are pushed to the main branch
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch the full history to support deployments
+
+      # Step 2: Setup Rust
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          override: true
 
-      - name: Build static site
-        run: cargo run
+      # Step 3: Build the static site
+      - name: Build Static Site
+        run: |
+          cargo build --release
+          cargo run
 
+      # Step 4: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_branch: gh-pages # Ensure we're deploying to the gh-pages branch
+          publish_dir: ./dist # The directory containing the generated site
 ```
 
 3. Push your changes to the main branch. GitHub Actions will automatically build and deploy the site to GitHub Pages.
