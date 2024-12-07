@@ -163,6 +163,7 @@ dist/
 ```markdown
 ---
 title: "Blog Title"
+image: /assets/image.jpg
 ---
 ```
 
