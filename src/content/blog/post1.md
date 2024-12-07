@@ -1,5 +1,6 @@
 ---
 title: "Dummy Blog 01"
+image: /assets/rubber-duck.jpg
 ---
 
 # Dummy Blog 01

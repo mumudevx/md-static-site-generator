@@ -55,6 +55,7 @@ fn main() -> Result<()> {
 struct PostMetadata {
     title: String,
     slug: String,
+    image: String,
 }
 
 fn process_markdown(src_path: &Path, dist_dir: &str, tera: &Tera) -> Result<PostMetadata> {
@@ -64,6 +65,8 @@ fn process_markdown(src_path: &Path, dist_dir: &str, tera: &Tera) -> Result<Post
     // Extract metadata (e.g., title) and parse markdown content
     let title = extract_metadata(&content, "title").unwrap_or_else(|| "Untitled".to_string());
     let slug = src_path.file_stem().unwrap().to_str().unwrap().to_string();
+    let image = extract_metadata(&content, "image")
+        .unwrap_or_else(|| "/assets/rubber-duck.jpg".to_string());
 
     // Parse markdown to HTML
     let parser = Parser::new(&content);
@@ -85,14 +88,14 @@ fn process_markdown(src_path: &Path, dist_dir: &str, tera: &Tera) -> Result<Post
     let mut context = tera::Context::new();
     context.insert("content", &html_output);
     context.insert("title", &title);
-
+    context.insert("image", &image);
     let rendered = tera
         .render("base.html", &context)
         .context("Failed to render template")?;
 
     // Write to the output HTML file
     fs::write(output_path, rendered).context("Failed to write HTML file")?;
-    Ok(PostMetadata { title, slug })
+    Ok(PostMetadata { title, slug, image })
 }
 
 fn extract_metadata(content: &str, key: &str) -> Option<String> {
