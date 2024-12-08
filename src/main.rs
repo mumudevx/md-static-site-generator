@@ -28,7 +28,7 @@ fn main() -> Result<()> {
             // Categorize the post based on its directory
             if path.starts_with("src/content/blog") {
                 blog_posts.push(metadata);
-            } else if path.starts_with("src/content/book") {
+            } else if path.starts_with("src/content/books") {
                 book_posts.push(metadata);
             }
         }
@@ -37,7 +37,7 @@ fn main() -> Result<()> {
     // Generate the homepage, blog listing, and book listing pages
     generate_homepage(dist_dir, &tera)?;
     generate_listing("blog", &blog_posts, dist_dir, &tera)?;
-    generate_listing("book", &book_posts, dist_dir, &tera)?;
+    generate_listing("books", &book_posts, dist_dir, &tera)?;
 
     // Copy assets
     copy_assets("src/assets", "dist/assets")?;
@@ -56,6 +56,8 @@ struct PostMetadata {
     title: String,
     slug: String,
     image: String,
+    description: String,
+    date: String,
 }
 
 fn process_markdown(src_path: &Path, dist_dir: &str, tera: &Tera) -> Result<PostMetadata> {
@@ -66,7 +68,10 @@ fn process_markdown(src_path: &Path, dist_dir: &str, tera: &Tera) -> Result<Post
     let title = extract_metadata(&content, "title").unwrap_or_else(|| "Untitled".to_string());
     let slug = src_path.file_stem().unwrap().to_str().unwrap().to_string();
     let image = extract_metadata(&content, "image")
-        .unwrap_or_else(|| "/assets/rubber-duck.jpg".to_string());
+        .unwrap_or_else(|| "/assets/images/rubber-duck.jpg".to_string());
+    let description =
+        extract_metadata(&content, "description").unwrap_or_else(|| "No description".to_string());
+    let date = extract_metadata(&content, "date").unwrap_or_else(|| "No date".to_string());
 
     // Parse markdown to HTML
     let parser = Parser::new(&content);
@@ -89,13 +94,21 @@ fn process_markdown(src_path: &Path, dist_dir: &str, tera: &Tera) -> Result<Post
     context.insert("content", &html_output);
     context.insert("title", &title);
     context.insert("image", &image);
+    context.insert("description", &description);
+    context.insert("date", &date);
     let rendered = tera
         .render("base.html", &context)
         .context("Failed to render template")?;
 
     // Write to the output HTML file
     fs::write(output_path, rendered).context("Failed to write HTML file")?;
-    Ok(PostMetadata { title, slug, image })
+    Ok(PostMetadata {
+        title,
+        slug,
+        image,
+        description,
+        date,
+    })
 }
 
 fn extract_metadata(content: &str, key: &str) -> Option<String> {
@@ -131,7 +144,7 @@ fn generate_listing(
 
     let template_name = match category {
         "blog" => "blog_list.html",
-        "book" => "book_list.html",
+        "books" => "book_list.html",
         _ => return Err(anyhow::anyhow!("Unknown category: {}", category)),
     };
 

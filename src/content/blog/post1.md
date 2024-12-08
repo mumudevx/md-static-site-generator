@@ -1,6 +1,9 @@
 ---
 title: "Dummy Blog 01"
+slug: "post1"
 image: /assets/rubber-duck.jpg
+description: "This is description context."
+date: 08-12-2024
 ---
 
 # Dummy Blog 01
@@ -19,4 +22,4 @@ Curabitur laoreet dolor diam, vitae consectetur libero tincidunt quis. Vestibulu
 
 Donec lectus leo, suscipit at elit in, ultricies pretium elit. In vitae odio eros. Nulla facilisi. Aenean ornare ex nulla, sagittis tempor odio pretium ac. Mauris in ultrices ante. Proin vehicula quis lacus quis elementum. Nulla laoreet aliquet egestas.
 
-![Rubber Duck](/assets/rubber-duck.jpg "Rubber Duck")
+![Rubber Duck](/assets/images/rubber-duck.jpg "Rubber Duck")
