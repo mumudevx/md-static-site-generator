@@ -162,8 +162,11 @@ dist/
 
 ```markdown
 ---
-title: "Blog Title"
-image: /assets/image.jpg
+title: Title Text
+slug: post1
+image: /assets/images/image.jpg
+description: This is description context.
+date: 08-12-2024
 ---
 ```
 

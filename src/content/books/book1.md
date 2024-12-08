@@ -1,12 +1,10 @@
 ---
-title: "Dummy Book 01"
-slug: "book1"
-image: /assets/rubber-duck.jpg
-description: "This is description context."
-date: 08-12-2024
+title: Dummy Book 01
+slug: book1
+image: /assets/images/rubber-duck.jpg
+description: This is description context.
+date: 2024-12-8
 ---
-
-# Dummy Book 01
 
 ## Section 01
 

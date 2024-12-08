@@ -11,11 +11,17 @@ body {
   color: #333;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 .container {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
 /* Header styles */
@@ -230,4 +236,104 @@ footer {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Blog post detail styles */
+.blog-post {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.post-header {
+  margin-bottom: 2rem;
+}
+
+.post-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.post-meta {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.post-content {
+  line-height: 1.8;
+}
+
+.post-content h2 {
+  margin: 2rem 0 1rem;
+}
+
+.post-content p {
+  margin-bottom: 1.5rem;
+}
+
+/* Book detail styles */
+.book-detail {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.book-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.book-cover {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.book-info h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.publish-date {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.book-description {
+  line-height: 1.8;
+}
+
+/* Back link styles */
+.back-link {
+  display: inline-block;
+  color: #666;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.back-link:hover {
+  color: #333;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .book-header {
+    grid-template-columns: 1fr;
+  }
+
+  .book-cover {
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }
